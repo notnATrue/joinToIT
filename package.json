@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "copy-assets": "ts-node tools/copy-assets",
+    "watch": "tsc -w",
     "tsc": "tsc",
     "build": "npm-run-all clean tsc copy-assets",
     "start:dev": "nodemon --watch src -e ts,ejs,conf,json --exec npm start",

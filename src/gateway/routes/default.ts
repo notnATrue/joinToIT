@@ -7,7 +7,7 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
     console.log("params ", params);
     /** VALIDATORS */
     /** PROCESSING */
-    const jsonData = [];
+    const jsonData = [{}];
     res.status(200).json(jsonData);
   } catch (e) {
     next(e);
