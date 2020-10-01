@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { newsService } from "../../news/newsService"
 
 export const route = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -6,8 +7,8 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
     const params = { ...req.params, ...req.query };
     console.log("params ", params);
     /** VALIDATORS */
-    /** PROCESSING */
-    const jsonData = [{}];
+  /** PROCESSING */
+    const jsonData = await newsService.getNews();
     res.status(200).json(jsonData);
   } catch (e) {
     next(e);
