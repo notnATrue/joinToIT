@@ -3,6 +3,7 @@ import _ from "lodash";
 import { UserService } from "../../user/service";
 import { UserFavoritesService } from "../../user-favorites/service";
 import { newsService } from "../../news/service";
+import { IFindFavorites } from "./interface";
 
 export const route = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -11,7 +12,6 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
       const { session } = cookies;
       const doc = await UserService.find({ session });
       if (doc) {
-        // const params = { ...req.params, ...req.query, ...req.body };
         const userDoc = await UserService.find({ session });
         const { id } = userDoc;
         const userFavoritesDocs = await UserFavoritesService.findAll({ id });
@@ -21,7 +21,7 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
           favoriteNewsIds.push(id);
         }
         const favoriteNews = await newsService.findByIds(favoriteNewsIds);
-        const jsonData = [];
+        const jsonData: IFindFavorites[] = [];
         for (const favoriteNew of favoriteNews) {
           const prepareData = _.pick(favoriteNew, ["title", "content", "author", "createdAt", "updatedAt", "id"]);
           jsonData.push(prepareData);

@@ -20,3 +20,12 @@ export interface IAddFeed {
   id: string;
   updatedAt: string;
 }
+
+export interface IFindFavorites {
+  title: string;
+  content: string;
+  author: string;
+  createdAt: string;
+  updatedAt: string;
+  id: string;
+}

@@ -14,7 +14,7 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
         const { id } = params;
         const userDoc = await UserService.find({ session });
         const { id: author } = userDoc;
-        const newsDoc = await newsService.delete({ id, author });
+        await newsService.delete({ id, author });
         res.status(204).json({ code: 204 });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });
