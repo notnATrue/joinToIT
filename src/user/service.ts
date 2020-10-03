@@ -8,7 +8,9 @@ export class UserService {
   };
 
   static async find(params: IUser): Promise<any> {
-    const doc = await User.find(params);
+    console.log("find params: ", params);
+    const { session } = params;
+    const doc = await User.findOne({ session });
     return doc;
   };
 

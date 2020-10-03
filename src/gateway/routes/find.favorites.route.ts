@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { newsService } from "../../news/newsService";
 import _ from "lodash";
 import { UserService } from "../../user/service";
+import { UserFavoritesService } from "../../user-favorites/service";
 
 export const route = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -11,11 +11,12 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
       const doc = await UserService.find({ session });
       if (doc) {
         const params = { ...req.params, ...req.query, ...req.body };
-        console.log("params ", params);
-        const { id } = params;
-        const newsDoc = await newsService.delete(id);
-        console.log("newsDoc ", newsDoc);
-        res.status(200).json({ code: 200, message: newsDoc });
+        const userDoc = await UserService.find({ session });
+        console.log("userDoc ", userDoc);
+        const { id } = userDoc;
+        const userFavoritesDoc = await UserFavoritesService.findAll({ id });
+        console.log("userFavoritesDoc ", userFavoritesDoc);
+        res.status(200).json({ code: 200, message: userFavoritesDoc });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });
       }
