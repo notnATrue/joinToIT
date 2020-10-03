@@ -12,7 +12,9 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
       const doc = await UserService.findOrCreate({ session });
       res.status(200).json({ code: 200, message: "already authorized"});
     } else {
-      res.status(200).cookie('session', await uuidv4(), { maxAge: 900000, httpOnly: true }).json({ code: 200, authorized: true });
+      const sessionId = JSON.stringify(await uuidv4());
+      const doc = await UserService.findOrCreate({ session: sessionId });
+      res.status(200).cookie('session', sessionId, { maxAge: 900000, httpOnly: true }).json({ code: 200, authorized: true });
     }
   } catch (e) {
     next(e);

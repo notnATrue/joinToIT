@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { newsService } from "../../news/newsService";
+import { newsService } from "../../news/service";
 import _ from "lodash";
 import { UserService } from "../../user/service";
+import { IAddFeed } from "./interface";
 
 export const route = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -13,7 +14,8 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
         const { content, title } = req.body;
         const { id: author} = doc;
         const newsDoc = await newsService.create({ title, content, author });
-        res.status(200).json({ code: 200, message: newsDoc });
+        const jsonData: IAddFeed = _.pick(newsDoc, ["title", "content", "author", "id", "createdAt", "updatedAt"])
+        res.status(201).json({ code: 201, message: jsonData });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });
       }

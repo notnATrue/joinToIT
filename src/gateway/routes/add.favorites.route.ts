@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import _ from "lodash";
 import { UserService } from "../../user/service";
 import { UserFavoritesService } from "../../user-favorites/service";
+import { IAddFavorites } from "./interface";
 
 export const route = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -15,7 +16,8 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
         const { id: userId } = userDoc;
         const { id: newsId } = params;
         const userFavoritesDoc = await UserFavoritesService.create({ userId, newsId });
-        res.status(200).json({ code: 200, message: userFavoritesDoc });
+        const jsonData: IAddFavorites = _.pick(userFavoritesDoc, ["newsId", "id", "createdAt", "updatedAt"])
+        res.status(201).json({ code: 201, message: jsonData });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });
       }

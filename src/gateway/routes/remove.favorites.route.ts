@@ -15,7 +15,7 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
         const { id: userId } = userDoc;
         const { id } = params;
         const userFavoritesDoc = await UserFavoritesService.delete({ userId, id });
-        res.status(200).json({ code: 200, message: userFavoritesDoc });
+        res.status(204).json({ code: 204 });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });
       }

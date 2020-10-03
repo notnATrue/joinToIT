@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { newsService } from "../../news/newsService";
+import { newsService } from "../../news/service";
 import _ from "lodash";
 import { IDTO } from "./interface";
 

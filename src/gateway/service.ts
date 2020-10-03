@@ -5,7 +5,7 @@ import express, { ErrorRequestHandler, Express, NextFunction, Request, RequestHa
 import bodyParser from "body-parser";
 import cookieParser from 'cookie-parser';
 import { DataBase } from "../db/service";
-import { newsService } from "../news/newsService";
+import { newsService } from "../news/service";
 import feedRoute from "./routes/feed.route";
 import authorizeRoute from "./routes/authorize.route";
 import addFeedRoute from "./routes/add.feed.route";

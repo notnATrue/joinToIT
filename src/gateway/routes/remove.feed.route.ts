@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { newsService } from "../../news/newsService";
+import { newsService } from "../../news/service";
 import _ from "lodash";
 import { UserService } from "../../user/service";
 
@@ -12,8 +12,10 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
       if (doc) {
         const params = { ...req.params, ...req.query, ...req.body };
         const { id } = params;
-        const newsDoc = await newsService.delete(id);
-        res.status(200).json({ code: 200, message: newsDoc });
+        const userDoc = await UserService.find({ session });
+        const { id: author } = userDoc;
+        const newsDoc = await newsService.delete({ id, author });
+        res.status(204).json({ code: 204 });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });
       }

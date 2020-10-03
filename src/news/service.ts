@@ -1,4 +1,5 @@
 import request from 'request';
+import { ICreateParams, IDeleteParams, ISaveNews } from './interface';
 import { News } from "./model";
 import { Validator } from './validator';
 
@@ -14,18 +15,19 @@ export class newsService {
     });
   }
 
-  static async create(params): Promise<any> {
+  static async create(params: ICreateParams): Promise<any> {
     const doc = await News.create(params);
     return doc;
   }
 
-  static async delete(params): Promise<any> {
-    const doc = await News.findByIdAndDelete(params).exec();
+  static async delete(params: IDeleteParams): Promise<any> {
+    const { author, id: _id } = params;
+    const doc = await News.findOneAndDelete({ author, _id }).exec();
     return doc;
   }
 
   static async saveNews(params): Promise<any> {
-    const articles = params["articles"];
+    const articles: ISaveNews[] = params["articles"];
     for (const article of articles) {
       const { author, title, content } = article;
       await News.create({ author, title, content });
@@ -36,7 +38,11 @@ export class newsService {
 
   static async find(): Promise<any> {
     const docs = await News.find({}).exec();
-    console.log(docs)
+    return docs;
+  }
+
+  static async findByIds(params): Promise<any> {
+    const docs = await News.find({ _id: { $in: params } }).exec();
     return docs;
   }
 }
