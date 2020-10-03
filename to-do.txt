@@ -1,0 +1,4 @@
+Make middleware
+Make validators
+Maybe remove static methods
+Add OAuth2
