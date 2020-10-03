@@ -16,19 +16,15 @@ export class newsService {
 
   static async create(params): Promise<any> {
     const doc = await News.create(params);
-    console.log(doc);
     return doc;
   }
 
   static async delete(params): Promise<any> {
     const doc = await News.findByIdAndDelete(params).exec();
-    console.log("doc ", doc);
     return doc;
   }
 
   static async saveNews(params): Promise<any> {
-    // const parsedParams = await Validator.createParams(params);
-    // console.log("parsedParams ", parsedParams);
     const articles = params["articles"];
     for (const article of articles) {
       const { author, title, content } = article;

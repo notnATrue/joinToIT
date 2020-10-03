@@ -11,10 +11,8 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
       const doc = await UserService.find({ session });
       if (doc) {
         const params = { ...req.params, ...req.query, ...req.body };
-        console.log("params ", params);
         const { id } = params;
         const newsDoc = await newsService.delete(id);
-        console.log("newsDoc ", newsDoc);
         res.status(200).json({ code: 200, message: newsDoc });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });

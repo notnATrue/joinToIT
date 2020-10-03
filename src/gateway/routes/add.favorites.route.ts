@@ -12,11 +12,9 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
       if (doc) {
         const params = { ...req.params, ...req.query, ...req.body };
         const userDoc = await UserService.find({ session });
-        console.log("userDoc ", userDoc);
         const { id: userId } = userDoc;
         const { id: newsId } = params;
         const userFavoritesDoc = await UserFavoritesService.create({ userId, newsId });
-        console.log("userFavoritesDoc ", userFavoritesDoc);
         res.status(200).json({ code: 200, message: userFavoritesDoc });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });

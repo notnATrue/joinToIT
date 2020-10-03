@@ -11,11 +11,9 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
       const { session } = cookies;
       const doc = await UserService.find({ session });
       if (doc) {
-        console.log("req.body ", req.body);
         const { content, title } = req.body;
         const { id: author} = doc;
         const newsDoc = await newsService.create({ title, content, author });
-        console.log("newsDoc ", newsDoc);
         res.status(200).json({ code: 200, message: newsDoc });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });
