@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { newsService } from "../../news/newsService";
 import _ from "lodash";
-import { IDTO } from "./interface";
 import { UserService } from "../../user/service";
 
 export const route = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
