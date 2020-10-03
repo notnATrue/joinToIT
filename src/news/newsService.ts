@@ -20,6 +20,12 @@ export class newsService {
     return doc;
   }
 
+  static async delete(params): Promise<any> {
+    const doc = await News.findByIdAndDelete(params).exec();
+    console.log("doc ", doc);
+    return doc;
+  }
+
   static async saveNews(params): Promise<any> {
     // const parsedParams = await Validator.createParams(params);
     // console.log("parsedParams ", parsedParams);

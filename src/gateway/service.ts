@@ -10,6 +10,7 @@ import defaultRoute from "./routes/default";
 import feedRoute from "./routes/feed.route";
 import authorizeRoute from "./routes/authorize.route";
 import addFeedRoute from "./routes/add.feed.route";
+import removeFeedRoute from "./routes/remove.feed.route";
 import passport from 'passport';
 import { OAuth2Strategy } from 'passport-oauth';
 import { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } from 'simple-oauth2';
@@ -61,6 +62,7 @@ export class GatewayService {
     this.server.get('/feed', feedRoute);
     this.server.get('/authorize', authorizeRoute);
     this.server.post('/feed', addFeedRoute);
+    this.server.delete('/feed/:id', removeFeedRoute);
     
     this.server.post('/token', oauth2.controller.token);
     this.server.get('/authorization', isAuthorized, oauth2.controller.authorization, function(req, res) {
