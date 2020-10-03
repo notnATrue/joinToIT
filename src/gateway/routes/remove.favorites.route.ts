@@ -14,7 +14,7 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
         const userDoc = await UserService.find({ session });
         const { id: userId } = userDoc;
         const { id } = params;
-        await UserFavoritesService.delete({ userId, id });
+        const doc = await UserFavoritesService.delete({ userId, id });
         res.status(204).json({ code: 204 });
       } else {
         res.status(422).json({ code: 422, message: "unathorized" });
