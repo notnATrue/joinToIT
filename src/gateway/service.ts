@@ -1,11 +1,15 @@
 
 import dotenv from "dotenv";
 import express, { ErrorRequestHandler, Express, NextFunction, Request, RequestHandler, Response } from "express";
-import defaultRoute from "./routes/default";
+
 import bodyParser from "body-parser";
+import cookieParser from 'cookie-parser';
 import { DataBase } from "../db/service";
 import { newsService } from "../news/newsService";
-import feedRoute from "./routes/feedRoute";
+import defaultRoute from "./routes/default";
+import feedRoute from "./routes/feed.route";
+import authorizeRoute from "./routes/authorize.route";
+import addFeedRoute from "./routes/add.feed.route";
 import passport from 'passport';
 import { OAuth2Strategy } from 'passport-oauth';
 import { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } from 'simple-oauth2';
@@ -50,16 +54,20 @@ export class GatewayService {
     this.server.use(bodyParser());
     this.server.use(bodyParser.json());
     this.server.use(bodyParser.urlencoded({ extended: true }));
-    this.server.use(oauth2.inject());
+    this.server.use(cookieParser());
+    // this.server.use(oauth2.inject());
     
     this.server.get('/', defaultRoute);
-    this.server.get('/feed', feedRoute)
+    this.server.get('/feed', feedRoute);
+    this.server.get('/authorize', authorizeRoute);
+    this.server.post('/feed', addFeedRoute);
+    
     this.server.post('/token', oauth2.controller.token);
     this.server.get('/authorization', isAuthorized, oauth2.controller.authorization, function(req, res) {
       // Render our decision page
       // Look into ./test/server for further information
       res.render('authorization', {layout: false});
-  });
+    });
     this.server.post('/authorization', isAuthorized, oauth2.controller.authorization);
       // this.server.get('/auth', authCheck);
    }

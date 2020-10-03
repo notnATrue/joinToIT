@@ -7,14 +7,14 @@ export const route = async (req: Request, res: Response, next: NextFunction): Pr
   try {
     const { token } = req as Request;
     const params = { ...req.params, ...req.query };
-  /** PROCESSING */
-    let prepareData: IDTO[] = [];
+    /** PROCESSING */
+    let jsonData: IDTO[] = [];
     const docs = await newsService.find();
     for (const doc of docs) {
       const prepareDoc: IDTO = _.pick(doc, ["author", "title", "content", "id"]);
-      prepareData.push(prepareDoc);
+      jsonData.push(prepareDoc);
     }
-    res.status(200).json(prepareData);
+    res.status(200).json(jsonData);
   } catch (e) {
     next(e);
   }

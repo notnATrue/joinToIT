@@ -9,8 +9,6 @@ export const NewsSchema: Schema = new Schema({
 NewsSchema.set("toObject", { virtuals: true });
 NewsSchema.set("toJSON", { virtuals: true });
 
-NewsSchema.index({ news: 1 });
-
 NewsSchema.index({ createdAt: 1 });
 NewsSchema.index({ updatedAt: 1 });
 
